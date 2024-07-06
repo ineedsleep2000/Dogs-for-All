@@ -4,6 +4,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime, timedelta
+import ipdb
 
 metadata = MetaData(
     naming_convention={
@@ -38,15 +39,15 @@ class Shelter(db.Model, SerializerMixin):
     # Validate_open: must be open or closed(True or False)
     @validates('is_open')
     def validate_open(self, key, is_open):
-        if is_open and is_open not in['True', "False"]:
+        if is_open and is_open not in[True, False]:
             raise ValueError('Must either be true(open) or false(closed)')
         return is_open
     # Validate_contact_number: must have phone number, length must have 10 digits
-    @validates('contact_number')
-    def validates_contact_number(self, key, contact_number):
-        if contact_number and not contact_number.isdigit() or len(contact_number) !=10:
-            raise ValueError('phone number must be 10 digits')
-        return contact_number
+    # @validates('contact_number')
+    # def validates_contact_number(self, key, contact_number):
+    #     if contact_number and not contact_number.isdigit() or len(contact_number) !=10:
+    #         raise ValueError('phone number must be 10 digits')
+    #     return contact_number
 
 class Dog(db.Model, SerializerMixin):
     __tablename__ = "dogs"
@@ -54,9 +55,9 @@ class Dog(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     breed = db.Column(db.String)
-    time_in_shelter = db.Column(db.DateTime)  
+    time_in_shelter = db.Column(db.Integer) 
     adopted = db.Column(db.Boolean)
-
+    
     #one to many relationship
     shelter_id = db.Column(db.Integer, db.ForeignKey('shelters.id'))
     
@@ -79,28 +80,29 @@ class Dog(db.Model, SerializerMixin):
             raise ValueError('Must have a name')
         return name
     # Validate_time_in_shelter: must be more than 1 week, can not be more than 4 weeks
-    @validates('time_in_shelter')
-    def validate_time_in_shelter(self, key, time_in_shelter):
-        if not time_in_shelter:
-            raise AssertionError('Must have a time in shelter date')
-        min_date = datetime.utcnow() - timedelta(weeks=4)
-        max_date = datetime.utcnow() - timedelta(weeks=1)
-        if not (min_date <= time_in_shelter <= max_date):
-            raise AssertionError('You can only input a pet that has been in the shelter for at least one week but not more than four weeks')
-        return time_in_shelter
+    # @validates('time_in_shelter')
+    # def validate_time_in_shelter(self, key, time_in_shelter):
+    #     if not time_in_shelter:
+    #         raise AssertionError('Must have a time in shelter date')
+    #     min_date = datetime.utcnow() - timedelta(weeks=4)
+    #     max_date = datetime.utcnow() - timedelta(weeks=1)
+    #     if not (min_date <= time_in_shelter <= max_date):
+    #         raise AssertionError('You can only input a pet that has been in the shelter for at least one week but not more than four weeks')
+    #     return time_in_shelter
+    
     # Validate_adopted: must be adopted or not adopted
     @validates('adopted')
     def validate_open(self, key, adopted):
         if adopted and adopted not in['True', "False"]:
             raise ValueError('Must either be true(adopted) or false(is not adopted)')
         return adopted
-
+   
 
 class AdoptionApplication(db.Model, SerializerMixin):
     __tablename__ = "adoption_applications"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    adoption_fee = db.Column(db.Float)
     is_adopted = db.Column(db.Boolean)
     
     owner_id = db.Column(db.Integer, db.ForeignKey('owners.id'))    
@@ -167,3 +169,4 @@ class Owner(db.Model, SerializerMixin):
         if not password and len(password) > 15:
             raise ValueError('Must have a password with less than 15 characters')
         return password
+
