@@ -65,6 +65,18 @@ class Dogs_by_id(Resource):
         db.session.delete(dog)
         db.session.commit()
         return make_response({'message': 'Dog deleted'}, 204)
+    
+    def patch(self,id):
+        dog=db.session.get(Dog, id)
+        if not dog:
+            return make_response({'error': 'Dog not found'}, 404)
+        form_json = request.get_json()
+        for key, value in form_json.items():
+            setattr(dog, key, value)
+        db.session.add(dog)
+        db.session.commit()
+        return make_response(dog.to_dict(), 202)
+
 
 class Shelters(Resource):
     def get(self):
@@ -104,6 +116,17 @@ class Shelters_by_id(Resource):
         db.session.delete(shelter)
         db.session.commit()
         return make_response({'message': 'Shelter deleted'}, 204)
+    
+    def patch(self,id):
+        shelter=db.session.get(Shelter, id)
+        if not shelter:
+            return make_response({'error': 'Shelter not found'}, 404)
+        form_json = request.get_json()
+        for key, value in form_json.items():
+            setattr(shelter, key, value)
+        db.session.add(shelter)
+        db.session.commit()
+        return make_response(shelter.to_dict(), 202)
 
 @app.route('/')
 def index():

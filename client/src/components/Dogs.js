@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import Card from './Card';
+import React, { useEffect, useState } from "react";
+import Card from "./Card";
 
 const Dogs = () => {
   const [dogs, setDogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/dogs')
-      .then(response => {
+    fetch("/dogs")
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
-        console.log('Fetched dogs:', data); // Debug log
+      .then((data) => {
+        console.log("Fetched dogs:", data); // Debug log
         setDogs(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching dogs:', error);
+      .catch((error) => {
+        console.error("Error fetching dogs:", error);
         setLoading(false);
       });
   }, []);
@@ -36,8 +36,14 @@ const Dogs = () => {
     <div>
       <h2>Available Dogs for Adoption</h2>
       <div className="card-container">
-        {dogs.map(dog => (
-          <Card key={dog.id} id={dog.id} name={dog.name} image={dog.image} type="dogs" />
+        {dogs.map((dog) => (
+          <Card
+            key={dog.id}
+            id={dog.id}
+            name={dog.name}
+            image={dog.image}
+            type="dogs"
+          />
         ))}
       </div>
     </div>

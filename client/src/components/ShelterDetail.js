@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const ShelterDetail = () => {
   const { id } = useParams();
@@ -7,19 +7,19 @@ const ShelterDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/shelters/${id}`)
-      .then(response => {
+    fetch(`/shelters/${id}`)
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setShelter(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching shelter details:', error);
+      .catch((error) => {
+        console.error("Error fetching shelter details:", error);
         setLoading(false);
       });
   }, [id]);

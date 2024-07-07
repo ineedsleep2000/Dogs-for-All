@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const DogDetail = () => {
   const { id } = useParams();
@@ -7,19 +7,19 @@ const DogDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/dogs/${id}`)
-      .then(response => {
+    fetch(`/dogs/${id}`)
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setDog(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching dog details:', error);
+      .catch((error) => {
+        console.error("Error fetching dog details:", error);
         setLoading(false);
       });
   }, [id]);
