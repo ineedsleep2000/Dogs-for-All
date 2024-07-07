@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import Card from './Card';
+import React, { useEffect, useState } from "react";
+import Card from "./Card";
 
 const Shelters = () => {
   const [shelters, setShelters] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/shelters')
-      .then(response => {
+    fetch("/shelters")
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
-        console.log('Fetched shelters:', data); // Debug log
+      .then((data) => {
+        console.log("Fetched shelters:", data); // Debug log
         setShelters(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching shelters:', error);
+      .catch((error) => {
+        console.error("Error fetching shelters:", error);
         setLoading(false);
       });
   }, []);
@@ -36,8 +36,14 @@ const Shelters = () => {
     <div>
       <h2>Available Shelters</h2>
       <div className="card-container">
-        {shelters.map(shelter => (
-          <Card key={shelter.id} id={shelter.id} name={shelter.name} location={shelter.location} type="shelters" />
+        {shelters.map((shelter) => (
+          <Card
+            key={shelter.id}
+            id={shelter.id}
+            name={shelter.name}
+            location={shelter.location}
+            type="shelters"
+          />
         ))}
       </div>
     </div>
