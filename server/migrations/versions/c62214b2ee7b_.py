@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 92e41a531d53
+Revision ID: c62214b2ee7b
 Revises: 
-Create Date: 2024-07-03 21:08:23.146406
+Create Date: 2024-07-07 16:19:03.993436
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '92e41a531d53'
+revision = 'c62214b2ee7b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -37,7 +37,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('breed', sa.String(), nullable=True),
-    sa.Column('time_in_shelter', sa.Date(), nullable=True),
+    sa.Column('time_in_shelter', sa.Integer(), nullable=True),
     sa.Column('adopted', sa.Boolean(), nullable=True),
     sa.Column('shelter_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['shelter_id'], ['shelters.id'], name=op.f('fk_dogs_shelter_id_shelters')),
@@ -45,7 +45,7 @@ def upgrade():
     )
     op.create_table('adoption_applications',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(), nullable=True),
+    sa.Column('adoption_fee', sa.Float(), nullable=True),
     sa.Column('is_adopted', sa.Boolean(), nullable=True),
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.Column('dog_id', sa.Integer(), nullable=True),
