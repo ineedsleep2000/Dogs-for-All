@@ -28,7 +28,7 @@ if __name__ == '__main__':
             d= Dog(
                 name=fake.first_name(), 
                 breed= 'mutt', 
-                time_in_shelter= randint(7, 28), 
+                time_in_shelter= fake.date_between('-28d', '-7d'), 
                 adopted= False, 
                 shelter_id= randint(1, 5))
             dogs.append(d)
@@ -53,8 +53,7 @@ if __name__ == '__main__':
 
         for _ in range (10):
             a=AdoptionApplication(
-                adoption_fee=randint(0.00, 100.00),
-                is_adopted= True,
+                adoption_fee=randint(0, 100),
                 owner_id=randint(1,10),
                 dog_id=randint(1,10))
             adoptapps.append(a)
@@ -67,7 +66,7 @@ if __name__ == '__main__':
             o=Owner(
                 name=fake.name(),
                 email=fake.email(),
-                password=fake.password())
+                _password_hash=fake.password())
             owners.append(o)
         db.session.add_all(owners)
         db.session.commit()

@@ -4,13 +4,12 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime, timedelta
+from sqlalchemy.ext.hybrid import hybrid_property
+from config import bcrypt
 
-metadata = MetaData(
-    naming_convention={
-        "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    }
-)
-
+metadata = MetaData(naming_convention={
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+})
 db = SQLAlchemy(metadata=metadata)
 
 # Models go here!
@@ -50,13 +49,16 @@ class Shelter(db.Model, SerializerMixin):
     #         raise ValueError('Phone number must be 10 digits')
     #     return contact_number
 
+    def __repr__(self):
+        return f'<name : {self.name} | address : {self.address} | contact_number : {self.contact_number} | is_open : {self.is_open}>'
+    
 class Dog(db.Model, SerializerMixin):
     __tablename__ = "dogs"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     breed = db.Column(db.String)
-    time_in_shelter = db.Column(db.Integer)
+    time_in_shelter = db.Column(db.DateTime)
     adopted = db.Column(db.Boolean)
 
     shelter_id = db.Column(db.Integer, db.ForeignKey('shelters.id'))
@@ -79,28 +81,30 @@ class Dog(db.Model, SerializerMixin):
             raise ValueError('Must have a name')
         return name
 
-    # @validates('time_in_shelter')
-    # def validate_time_in_shelter(self, key, time_in_shelter):
-    #     if not time_in_shelter:
-    #         raise AssertionError('Must have a time in shelter date')
-    #     min_date = datetime.utcnow() - timedelta(weeks=4)
-    #     max_date = datetime.utcnow() - timedelta(weeks=1)
-    #     if not (min_date <= time_in_shelter <= max_date):
-    #         raise AssertionError('You can only input a pet that has been in the shelter for at least one week but not more than four weeks')
-    #     return time_in_shelter
+    @validates('time_in_shelter')
+    def validate_time_in_shelter(self, key, time_in_shelter):
+        if not time_in_shelter:
+            raise AssertionError('Must have a time in shelter date')
+        min_date = datetime.utcnow() - timedelta(weeks=4)
+        max_date = datetime.utcnow() - timedelta(weeks=1)
+        if not (min_date.date() <= time_in_shelter <= max_date.date()):
+            raise AssertionError('You can only input a pet that has been in the shelter for at least one week but not more than four weeks')
+        return time_in_shelter
 
     @validates('adopted')
     def validate_adopted(self, key, adopted):
         if adopted not in [True, False]:
             raise ValueError('Must either be true(adopted) or false(not adopted)')
         return adopted
+    
+    def __repr__(self):
+        return f'<name : {self.name} | breed : {self.breed} | time_in_shelter : {self.time_in_shelter} | adopted : {self.adopted}>'
 
 class AdoptionApplication(db.Model, SerializerMixin):
     __tablename__ = "adoption_applications"
 
     id = db.Column(db.Integer, primary_key=True)
     adoption_fee = db.Column(db.Float)
-    is_adopted = db.Column(db.Boolean)
 
     owner_id = db.Column(db.Integer, db.ForeignKey('owners.id'))
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.id'))
@@ -129,6 +133,9 @@ class AdoptionApplication(db.Model, SerializerMixin):
         if not dog_id:
             raise ValueError('Must have a dog_id')
         return dog_id
+    
+    def __repr__(self):
+        return f'<adoption_fee : {self.adoption_fee} | dog_id : {self.dog_id} | owner_id : {self.owner_id}>'
 
 class Owner(db.Model, SerializerMixin):
     __tablename__ = "owners"
@@ -136,7 +143,7 @@ class Owner(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String)
-    password = db.Column(db.String)
+    _password_hash = db.Column(db.String)
 
     adoption_applications = db.relationship('AdoptionApplication', back_populates='owner', cascade='all, delete-orphan')
     dogs = association_proxy('adoption_applications', 'dog')
@@ -160,3 +167,18 @@ class Owner(db.Model, SerializerMixin):
         if not password or len(password) > 15:
             raise ValueError('Must have a password with less than 15 characters')
         return password
+    
+    @hybrid_property
+    def password_hash(self):
+        return self._password_hash
+    
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(password.encode("utf8"))
+        self._password_hash = password_hash.decode("utf8")
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password.encode("utf8"))
+    
+    def __repr__(self):
+        return f'<name : {self.name} | email : {self.email} | password : {self._password_hash}>'
