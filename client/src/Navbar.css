@@ -1,25 +1,32 @@
+/* src/components/Navbar.css */
 header {
-    background-color: #282c34;
-    padding: 5px;
-    text-align: center;
-  }
-  
-  nav {
-    display: inline-block;
-  }
-  
-  nav a {
-    color: #5ce1e6;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 20px;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-  
-  nav a.active {
-    font-weight: bold;
-    text-decoration: underline;
-  }
+  background-color: grey;
+  padding: 5px;
+  text-align: center;
+}
+
+.logo {
+  height: 150px; /* Adjust as needed */
+  vertical-align: middle;
+}
+
+nav {
+  display: inline-block;
+  margin-left: 20px; /* Adjust as needed */
+}
+
+nav a {
+  color: #5ce1e6;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 20px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
