@@ -7,7 +7,7 @@ const DogDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/dogs/${id}`)
+    fetch(`http://localhost:3000/dogs/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

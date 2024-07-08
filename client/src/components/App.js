@@ -1,14 +1,14 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Home from './Home';
-import DogDetail from './DogDetail';
-import Dogs from './Dogs';
-import Login from './Login';
-import Register from './Register';
-import Adopt from './Adopt';
-import Navigation from './Navbar';
-import ShelterDetail from './ShelterDetail';
-import Shelters from './Shelters';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import Home from "./Home";
+import DogDetail from "./DogDetail";
+import Dogs from "./Dogs";
+import Login from "./Login";
+import Register from "./Register";
+import Adopt from "./Adopt";
+import Navigation from "./Navbar";
+import ShelterDetail from "./ShelterDetail";
+import Shelters from "./Shelters";
 
 function App() {
   return (
