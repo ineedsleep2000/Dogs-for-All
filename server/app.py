@@ -9,7 +9,6 @@ import ipdb
 import datetime 
 from werkzeug.exceptions import NotFound, Unauthorized
 
-
 # Instantiate app, set attributes
 app = Flask(__name__)#Initialize app/ creates flask app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'#connects flask to DB
@@ -21,7 +20,7 @@ db.init_app(app)#initializes the SQLA instance with the Flask app, works with mi
 # Instantiate REST API
 api = Api(app)# initalizes Flask-RESTful API within your Flask application
 
-# Instantiate CORS
+# # Instantiate CORS
 CORS(app)
 
 @app.route('/')
@@ -139,8 +138,9 @@ class Owners(Resource):
                 email=req_json["email"],
                 password_hash=req_json["password"]
             )
-        except:
-            abort(422, "Some values failed validation")
+        except ValueError as e:
+            return make_response({'errors': e.args})
+            # abort(422, "Some values failed validation")
         db.session.add(new_owner)
         db.session.commit()
         session["owner_id"] = new_owner.id  # give the new_owner "logged in status"
@@ -169,8 +169,6 @@ def logout():
     # session["user_id"] = None
     session.clear()
     return make_response({}, 204)
-
-
 
 api.add_resource(Dogs, '/dogs')
 api.add_resource(Dogs_by_id, '/dogs/<int:id>')
