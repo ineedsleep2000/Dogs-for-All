@@ -10,15 +10,14 @@ import datetime
 from werkzeug.exceptions import NotFound, Unauthorized
 
 # Instantiate app, set attributes
-app = Flask(__name__)#Initialize app/ creates flask app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'#connects flask to DB
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False#prevents bloating
-app.json.compact = False#makes json clean, and not on one line
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.json.compact = False
 
-migrate = Migrate(app, db)#initialize Migration. what lets SQLAlchemy speak to our app
-db.init_app(app)#initializes the SQLA instance with the Flask app, works with migrate
-# Instantiate REST API
-api = Api(app)# initalizes Flask-RESTful API within your Flask application
+migrate = Migrate(app, db)
+db.init_app(app)
+api = Api(app)
 
 # # Instantiate CORS
 CORS(app)
