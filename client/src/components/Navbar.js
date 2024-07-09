@@ -1,10 +1,13 @@
 // src/components/Navbar.js
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import '../Navbar.css';
-import logo from "../assets/dogsforall.png";
+import logo from '../assets/dogsforall.png';
 
 function Navbar() {
+  const { auth, logout } = useAuth();
+
   return (
     <header>
       <img src={logo} alt="Dogs for All Logo" className="logo" />
@@ -24,12 +27,29 @@ function Navbar() {
         <NavLink to="/contact-us" activeClassName="active">
           Contact Us
         </NavLink>
-        <NavLink to="/login" activeClassName="active">
-          Login
-        </NavLink>
-        <NavLink to="/register" activeClassName="active">
-          Register
-        </NavLink>
+        {auth.isLoggedIn ? (
+          <>
+            <NavLink to="/add-dog" activeClassName="active">
+              Add Dog
+            </NavLink>
+            <NavLink to="/add-shelter" activeClassName="active">
+              Add Shelter
+            </NavLink>
+            <button onClick={logout}>Logout</button>
+            <NavLink to="/adopt" activeClassName="active">
+              Adopt
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login" activeClassName="active">
+              Login
+            </NavLink>
+            <NavLink to="/register" activeClassName="active">
+              Register
+            </NavLink>
+          </>
+        )}
       </nav>
     </header>
   );
