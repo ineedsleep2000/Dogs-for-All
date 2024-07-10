@@ -1,9 +1,9 @@
 // src/components/Shelters.js
-import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import AddShelter from './AddShelter';
-import ShelterList from './ShelterList';
-import EditShelter from './EditShelter';
+import React from "react";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import AddShelter from "./AddShelter";
+import ShelterList from "./ShelterList";
+import EditShelter from "./EditShelter";
 
 function Shelters() {
   let { path } = useRouteMatch();
