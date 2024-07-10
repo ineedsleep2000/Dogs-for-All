@@ -135,7 +135,7 @@ class Owners(Resource):
 
 @app.route("/login", methods=["POST"])
 def login():
-    owner = Owner.query.filter(Owner.name == request.get_json()["name"]).first()
+    owner = Owner.query.filter(Owner.email == request.get_json()["email"]).first()
     # ipdb.set_trace()
     if owner and owner.authenticate(request.get_json()["password"]):
         session["owner_id"] = owner.id  # give the owner "logged in status"

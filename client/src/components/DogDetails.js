@@ -1,31 +1,30 @@
 // src/components/DogDetails.js
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-function DogDetails() {
-  const { id } = useParams();
-  const [dog, setDog] = useState(null);
+const DogDetails = ({ dog, user }) => {
+  const history = useHistory();
 
-  useEffect(() => {
-    fetch(`/dogs/${id}`)
-      .then((response) => response.json())
-      .then((data) => setDog(data))
-      .catch((error) => console.error('Error fetching dog:', error));
-  }, [id]);
-
-  if (!dog) {
-    return <p>Loading...</p>;
-  }
+  const handleAdoptMe = () => {
+    if (user) {
+      history.push({
+        pathname: '/adopt',
+        state: { dogId: dog.id, ownerId: user.id }
+      });
+    } else {
+      history.push('/login');
+    }
+  };
 
   return (
-    <div className="dog-details">
-      <h2>{dog.name}</h2>
+    <div>
+      <h1>{dog.name}</h1>
       <p>Breed: {dog.breed}</p>
-      <p>Time in Shelter: {dog.time_in_shelter} days</p>
+      <p>Time in Shelter: {dog.time_in_shelter}</p>
       <p>Adopted: {dog.adopted ? 'Yes' : 'No'}</p>
-      <p>Shelter: {dog.shelter.name}</p> {/* Assuming the API provides the shelter's name */}
+      <button onClick={handleAdoptMe}>Adopt Me</button>
     </div>
   );
-}
+};
 
 export default DogDetails;

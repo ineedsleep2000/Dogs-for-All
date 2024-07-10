@@ -35,7 +35,7 @@ function Navbar() {
             <NavLink to="/add-shelter" activeClassName="active">
               Add Shelter
             </NavLink>
-            <button onClick={logout}>Logout</button>
+            <button className="logout-button" onClick={logout}>Logout</button>
             <NavLink to="/adopt" activeClassName="active">
               Adopt
             </NavLink>
