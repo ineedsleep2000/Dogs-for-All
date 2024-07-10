@@ -24,6 +24,7 @@ class Dogs(Resource):
         format = '%b %d %Y %I:%M%p'
         new_dog = Dog(
             name=form_json['name'],
+            image=form_json['image'],
             breed=form_json['breed'],
             time_in_shelter=datetime.datetime.strptime(form_json['time_in_shelter'], format),
             adopted=form_json['adopted'],

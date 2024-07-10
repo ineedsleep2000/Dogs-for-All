@@ -52,6 +52,7 @@ class Dog(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    image = db.Column(db.String)
     breed = db.Column(db.String)
     time_in_shelter = db.Column(db.DateTime)
     adopted = db.Column(db.Boolean)
