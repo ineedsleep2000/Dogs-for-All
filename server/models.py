@@ -83,7 +83,7 @@ class Dog(db.Model, SerializerMixin):
             raise AssertionError('Must have a time in shelter date')
         min_date = datetime.utcnow() - timedelta(weeks=4)
         max_date = datetime.utcnow() - timedelta(weeks=1)
-        if not (min_date.date() <= time_in_shelter <= max_date.date()):
+        if not (min_date.date() <= time_in_shelter.date() <= max_date.date()):
             raise AssertionError('You can only input a pet that has been in the shelter for at least one week but not more than four weeks')
         return time_in_shelter
 
