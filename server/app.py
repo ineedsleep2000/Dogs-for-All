@@ -24,6 +24,7 @@ class Dogs(Resource):
         format = '%b %d %Y %I:%M%p'
         new_dog = Dog(
             name=form_json['name'],
+            image=form_json['image'],
             breed=form_json['breed'],
             time_in_shelter=datetime.datetime.strptime(form_json['time_in_shelter'], format),
             adopted=form_json['adopted'],
@@ -157,11 +158,28 @@ def logout():
     session.clear()
     return make_response({}, 204)
 
+class AdoptionApplications(Resource):
+    def post(self):
+        req_json = request.get_json()
+        try:
+            new_adoption_application = AdoptionApplication(
+                adoption_fee=req_json["adoption_fee"],
+                dog_id=req_json["dog_id"],
+                owner_id=req_json["owner_id"]
+            )
+        except ValueError as e:
+            return make_response({'errors': e.args})
+            # abort(422, "Some values failed validation")
+        db.session.add(new_adoption_application)
+        db.session.commit()
+        return make_response(new_adoption_application.to_dict(), 201)
+
 api.add_resource(Dogs, '/dogs')
 api.add_resource(Dogs_by_id, '/dogs/<int:id>')
 api.add_resource(Shelters, '/shelters')
 api.add_resource(Shelters_by_id, '/shelters/<int:id>')
 api.add_resource(Owners, "/owners", "/signup")
+api.add_resource(AdoptionApplications, "/adoption_application")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

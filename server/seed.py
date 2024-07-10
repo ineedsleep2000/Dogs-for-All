@@ -24,17 +24,19 @@ if __name__ == '__main__':
 
         dogs = []
     
-        for _ in range (10):
-            d= Dog(
-                name=fake.first_name(), 
-                breed= 'mutt', 
-                time_in_shelter= fake.date_between('-28d', '-7d'), 
-                adopted= False, 
-                shelter_id= randint(1, 5))
-            dogs.append(d)
-
+        d1 = Dog(name="Kevin",image="https://www.akc.org/wp-content/uploads/2017/11/Chihuahua-standing-in-three-quarter-view.jpg",breed="chihuahua",time_in_shelter=fake.date_between('-28d', '-7d'),adopted=False,shelter_id=1)
+        dogs.append(d1)
+        d2 = Dog(name="Marlene",image="https://geniusvets.s3.amazonaws.com/gv-dog-breeds/american-pitbull-1.jpg",breed="pitbull",time_in_shelter=fake.date_between('-28d', '-7d'),adopted=False,shelter_id=2)
+        dogs.append(d2)
+        d3 = Dog(name="Harvey",image="https://www.thewaggintrain.com/cdn-cgi/image/q=75,f=auto,metadata=none/sites/default/files/styles/large/public/golden-retriever-dog-breed-info.jpg?itok=y3Zh8yXy",breed="golden retriever",time_in_shelter=fake.date_between('-28d', '-7d'),adopted=False,shelter_id=3)
+        dogs.append(d3)
+        d4 = Dog(name="Bella",image="https://www.dogster.com/wp-content/uploads/2024/03/Cute-golden-labradoodle-laying-in-lush-grass_zstock_Shutterstock.jpg",breed="labradoodle",time_in_shelter=fake.date_between('-28d', '-7d'),adopted=False,shelter_id=4)
+        dogs.append(d4)
+        d5 = Dog(name="Kroxa(kr-o-ah)",image="https://image.petmd.com/files/inline-images/german-shepherd-3.jpg?VersionId=QrldSoaj4srcfCInIahiKcoLSh5D0gh8",breed="german shepherd",time_in_shelter=fake.date_between('-28d', '-7d'),adopted=False,shelter_id=5)
+        dogs.append(d5)
         db.session.add_all(dogs)
         db.session.commit()
+
 
         shelters = []
 
