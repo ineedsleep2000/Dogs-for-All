@@ -77,15 +77,15 @@ class Dog(db.Model, SerializerMixin):
             raise ValueError('Must have a name')
         return name
 
-    @validates('time_in_shelter')
-    def validate_time_in_shelter(self, key, time_in_shelter):
-        if not time_in_shelter:
-            raise AssertionError('Must have a time in shelter date')
-        min_date = datetime.utcnow() - timedelta(weeks=4)
-        max_date = datetime.utcnow() - timedelta(weeks=1)
-        if not (min_date.date() <= time_in_shelter.date() <= max_date.date()):
-            raise AssertionError('You can only input a pet that has been in the shelter for at least one week but not more than four weeks')
-        return time_in_shelter
+    # @validates('time_in_shelter')
+    # def validate_time_in_shelter(self, key, time_in_shelter):
+    #     if not time_in_shelter:
+    #         raise AssertionError('Must have a time in shelter date')
+    #     min_date = datetime.utcnow() - timedelta(weeks=4)
+    #     max_date = datetime.utcnow() - timedelta(weeks=1)
+    #     if not (min_date.date() <= time_in_shelter.date() <= max_date.date()):
+    #         raise AssertionError('You can only input a pet that has been in the shelter for at least one week but not more than four weeks')
+    #     return time_in_shelter
 
     @validates('adopted')
     def validate_adopted(self, key, adopted):
