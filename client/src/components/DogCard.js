@@ -48,7 +48,7 @@ function DogCard({ dog, onDelete }) {
       <p>Shelter ID: {dog.shelter_id}</p>
       <button onClick={(e) => { e.stopPropagation(); handleAdoptClick(); }}>Adopt Me</button>
       {auth.isLoggedIn && (
-        <button onClick={(e) => { e.stopPropagation(); handleDeleteClick(e); }}>Delete</button>
+        <button className="delete-button" onClick={(e) => { e.stopPropagation(); handleDeleteClick(e); }}>Delete</button>
       )}
     </div>
   );

@@ -1,44 +1,39 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import '../AddDog.css'; // Import the CSS file
+import '../AddDog.css';
 
 const AddDog = () => {
   const [name, setName] = useState('');
+  const [image, setImage] = useState('');
   const [breed, setBreed] = useState('');
   const [timeInShelter, setTimeInShelter] = useState('');
   const [adopted, setAdopted] = useState(false);
   const [shelterId, setShelterId] = useState('');
   const [error, setError] = useState('');
-  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
+      const formattedTimeInShelter = new Date(timeInShelter).toISOString();
+
       const response = await fetch('/dogs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name,
-          breed,
-          time_in_shelter: new Date(timeInShelter).toISOString(),
-          adopted,
-          shelter_id: shelterId
+        body: JSON.stringify({ 
+          name, 
+          image, 
+          breed, 
+          time_in_shelter: formattedTimeInShelter, 
+          adopted, 
+          shelter_id: shelterId 
         }),
       });
 
       if (response.ok) {
-        // Clear the form fields or redirect the user
-        setName('');
-        setBreed('');
-        setTimeInShelter('');
-        setAdopted(false);
-        setShelterId('');
-        // Redirect to the dogs list page
-        history.push('/dogs');
+        // Handle successful dog addition
       } else {
         setError('Failed to add dog. Please try again.');
       }
@@ -57,6 +52,13 @@ const AddDog = () => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <label>Image URL</label>
+        <input
+          type="text"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
           required
         />
         <label>Breed</label>
@@ -81,7 +83,7 @@ const AddDog = () => {
         />
         <label>Shelter ID</label>
         <input
-          type="number"
+          type="text"
           value={shelterId}
           onChange={(e) => setShelterId(e.target.value)}
           required
