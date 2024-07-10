@@ -1,0 +1,52 @@
+/* src/components/AddDog.css */
+.add-dog-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .add-dog-container h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .add-dog-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-dog-container label {
+    margin-bottom: 5px;
+    color: #666;
+  }
+  
+  .add-dog-container input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .add-dog-container button {
+    padding: 10px;
+    background-color: #5ce1e6;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .add-dog-container button:hover {
+    background-color: #45b8bd;
+  }
+  
+  .add-dog-container p {
+    color: red;
+    text-align: center;
+  }
+  

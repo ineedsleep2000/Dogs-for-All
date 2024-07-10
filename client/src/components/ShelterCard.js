@@ -1,7 +1,7 @@
 // src/components/ShelterCard.js
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import '../ShelterCard.css'; // Import the CSS file
+import '../ShelterCard.css'; 
 
 function ShelterCard({ shelter, onDelete }) {
   const { auth } = useAuth();

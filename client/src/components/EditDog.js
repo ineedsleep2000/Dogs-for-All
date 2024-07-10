@@ -15,7 +15,7 @@ function EditDog() {
   }, [id]);
 
   const handleUpdateDog = async (updatedDog) => {
-    const response = await fetch(`/api/dogs/${id}`, {
+    const response = await fetch(`/dogs/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

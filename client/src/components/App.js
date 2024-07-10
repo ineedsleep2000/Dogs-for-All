@@ -1,13 +1,13 @@
 // src/components/App.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import DogPage from './DogPage';
-import DogDetails from './DogDetails'; // Import the DogDetails component
-import AddDog from './AddDog'; // Import AddDog component
-import EditDog from './EditDog'; // Import EditDog component
-import AddShelter from './AddShelter'; // Import AddShelter component
-import EditShelter from './EditShelter'; // Import EditShelter component
+import DogDetails from './DogDetails';
+import AddDog from './AddDog';
+import EditDog from './EditDog';
+import AddShelter from './AddShelter';
+import EditShelter from './EditShelter';
 import Shelters from './Shelters';
 import Navbar from './Navbar';
 import AboutUs from './AboutUs';
@@ -17,24 +17,38 @@ import Register from './Register';
 import AdoptApp from './AdoptApp';
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch the user data or retrieve from local storage/session
+    const fetchUser = async () => {
+      const response = await fetch('/authorized');
+      if (response.ok) {
+        const user = await response.json();
+        setUser(user);
+      }
+    };
+    fetchUser();
+  }, []);
+
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        <Navbar user={user} />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/dogs" exact component={DogPage} />
-          <Route path="/dogs/:id" component={DogDetails} /> {/* Add the route for dog details */}
-          <Route path="/add-dog" component={AddDog} /> {/* Add route for adding dogs */}
-          <Route path="/edit-dog/:id" component={EditDog} /> {/* Add route for editing dogs */}
+          <Route path="/dogs/:id" component={(props) => <DogDetails {...props} user={user} />} />
+          <Route path="/add-dog" component={AddDog} />
+          <Route path="/edit-dog/:id" component={EditDog} />
           <Route path="/shelters" component={Shelters} />
-          <Route path="/add-shelter" component={AddShelter} /> {/* Add route for adding shelters */}
-          <Route path="/edit-shelter/:id" component={EditShelter} /> {/* Add route for editing shelters */}
+          <Route path="/add-shelter" component={AddShelter} />
+          <Route path="/edit-shelter/:id" component={EditShelter} />
           <Route path="/about-us" component={AboutUs} />
           <Route path="/contact-us" component={ContactUs} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/adopt" component={AdoptApp} />
+          <Route path="/login" component={(props) => <Login {...props} setUser={setUser} />} />
+          <Route path="/register" component={(props) => <Register {...props} setUser={setUser} />} />
+          <Route path="/adopt" component={(props) => <AdoptApp {...props} user={user} />} />
         </Switch>
       </div>
     </Router>

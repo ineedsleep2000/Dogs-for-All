@@ -2,7 +2,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import '../DogCard.css'; // Import the CSS file
+import '../DogCard.css';
 
 function DogCard({ dog, onDelete }) {
   const { auth } = useAuth();
@@ -19,10 +19,6 @@ function DogCard({ dog, onDelete }) {
     }
   };
 
-  const handleCardClick = () => {
-    history.push(`/dogs/${dog.id}`);
-  };
-
   const handleDeleteClick = async (e) => {
     e.stopPropagation();
     const response = await fetch(`/dogs/${dog.id}`, {
@@ -36,6 +32,13 @@ function DogCard({ dog, onDelete }) {
     }
   };
 
+  const handleCardClick = () => {
+    history.push({
+      pathname: `/dogs/${dog.id}`,
+      state: { dogId: dog.id }
+    });
+  };
+
   return (
     <div className="dog-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <h3>{dog.name}</h3>
@@ -45,7 +48,7 @@ function DogCard({ dog, onDelete }) {
       <p>Shelter ID: {dog.shelter_id}</p>
       <button onClick={(e) => { e.stopPropagation(); handleAdoptClick(); }}>Adopt Me</button>
       {auth.isLoggedIn && (
-        <button onClick={handleDeleteClick}>Delete</button>
+        <button onClick={(e) => { e.stopPropagation(); handleDeleteClick(e); }}>Delete</button>
       )}
     </div>
   );

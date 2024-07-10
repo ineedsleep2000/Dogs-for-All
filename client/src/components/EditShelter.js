@@ -8,14 +8,14 @@ function EditShelter() {
   const [shelter, setShelter] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/shelters/${id}`)
+    fetch(`/shelters/${id}`)
       .then((response) => response.json())
       .then((data) => setShelter(data))
       .catch((error) => console.error('Error fetching shelter:', error));
   }, [id]);
 
   const handleUpdateShelter = async (updatedShelter) => {
-    const response = await fetch(`/api/shelters/${id}`, {
+    const response = await fetch(`/shelters/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
