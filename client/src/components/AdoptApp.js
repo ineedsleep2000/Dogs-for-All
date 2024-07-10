@@ -12,7 +12,7 @@ const AdoptApp = ({ user }) => {
 
   useEffect(() => {
     if (dogId && user && user.id) {
-      setApplicationFee((Math.random() * 100).toFixed(2)); // Generate a random fee between 0 and 100
+      setApplicationFee((Math.random() * 100).toFixed(2));
     }
   }, [dogId, user]);
 
