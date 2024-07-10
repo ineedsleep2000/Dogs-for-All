@@ -35,3 +35,11 @@
 .dog-card button:hover {
   background-color: #45b8bd;
 }
+
+.dog-card .delete-button {
+  background-color: #e74c3c;
+}
+
+.dog-card .delete-button:hover {
+  background-color: #c0392b;
+}
