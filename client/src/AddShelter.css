@@ -33,7 +33,7 @@
   
   .add-shelter-container button {
     padding: 10px;
-    background-color: darkcyan;
+    background-color: #5ce1e6;
     border: none;
     border-radius: 4px;
     color: white;
@@ -42,11 +42,11 @@
   }
   
   .add-shelter-container button:hover {
-    background-color: #5ce1e6;
+    background-color: lightgreen;
   }
   
   .add-shelter-container p {
-    color: #ff6666;
+    color: lightgreen;
     text-align: center;
   }
 

@@ -42,7 +42,7 @@ const About = () => {
           </p>
           <p>
             If you would like to add your suggestions to our roadmap for future
-            updates, please call our main office at (555)-Dogs-ForAll.
+            updates, please call our main office at (555)-Dogs-For-All.
           </p>
         </div>
         <div className="about-box">

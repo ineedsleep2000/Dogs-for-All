@@ -34,7 +34,7 @@
   }
   
   .edit-dog-container button {
-    background-color: #4CAF50;
+    background-color: #5ce1e6;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -42,7 +42,7 @@
   }
   
   .edit-dog-container button:hover {
-    background-color: #45a049;
+    background-color: lightgreen;
   }
   
   .edit-dog-container .error-message {
