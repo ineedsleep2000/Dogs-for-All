@@ -1,4 +1,3 @@
-// src/components/ShelterList.js
 import React, { useEffect, useState } from 'react';
 import ShelterCard from './ShelterCard';
 
@@ -11,11 +10,15 @@ function ShelterList() {
       .then((data) => setShelters(data));
   }, []);
 
+  const handleDeleteShelter = (id) => {
+    setShelters(shelters.filter(shelter => shelter.id !== id));
+  };
+
   return (
     <div className="shelter-list">
       <h2>Shelters</h2>
       {shelters.map((shelter) => (
-        <ShelterCard key={shelter.id} shelter={shelter} />
+        <ShelterCard key={shelter.id} shelter={shelter} onDelete={handleDeleteShelter} />
       ))}
     </div>
   );

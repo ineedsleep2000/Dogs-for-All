@@ -1,15 +1,11 @@
-// src/components/AddDog.js
 import React, { useState } from 'react';
-import { format } from 'date-fns';
-import '../AddDog.css';
+import '../AddShelter.css'; // Import the CSS file
 
-const AddDog = () => {
+const AddShelter = () => {
   const [name, setName] = useState('');
-  const [image, setImage] = useState('');
-  const [breed, setBreed] = useState('');
-  const [timeInShelter, setTimeInShelter] = useState('');
-  const [adopted, setAdopted] = useState(false);
-  const [shelterId, setShelterId] = useState('');
+  const [address, setAddress] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -19,37 +15,32 @@ const AddDog = () => {
     setSuccess('');
 
     try {
-      const formattedTimeInShelter = format(new Date(timeInShelter), 'MMM dd yyyy hh:mma');
-
-      const response = await fetch('/dogs', {
+      const response = await fetch('/shelters', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          name, 
-          image, 
-          breed, 
-          time_in_shelter: formattedTimeInShelter, 
-          adopted, 
-          shelter_id: shelterId 
-        }),
+        body: JSON.stringify({ name, address, contact_number: contactNumber, is_open: isOpen }),
       });
 
       if (response.ok) {
-        setSuccess('Dog added successfully!');
+        setSuccess('Shelter added successfully!');
+        setName('');
+        setAddress('');
+        setContactNumber('');
+        setIsOpen(false);
       } else {
-        setError('Failed to add dog. Please try again.');
+        setError('Failed to add shelter. Please try again.');
       }
     } catch (error) {
-      console.error('Error during dog addition:', error);
+      console.error('Error during shelter addition:', error);
       setError('An error occurred. Please try again later.');
     }
   };
 
   return (
-    <div className="add-dog-container">
-      <h1>Add Dog</h1>
+    <div className="add-shelter-container">
+      <h1>Add Shelter</h1>
       <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input
@@ -58,41 +49,27 @@ const AddDog = () => {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <label>Image URL</label>
+        <label>Address</label>
         <input
           type="text"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
           required
         />
-        <label>Breed</label>
+        <label>Contact Number</label>
         <input
           type="text"
-          value={breed}
-          onChange={(e) => setBreed(e.target.value)}
+          value={contactNumber}
+          onChange={(e) => setContactNumber(e.target.value)}
           required
         />
-        <label>Time in Shelter</label>
-        <input
-          type="datetime-local"
-          value={timeInShelter}
-          onChange={(e) => setTimeInShelter(e.target.value)}
-          required
-        />
-        <label>Adopted</label>
+        <label>Is Open</label>
         <input
           type="checkbox"
-          checked={adopted}
-          onChange={(e) => setAdopted(e.target.checked)}
+          checked={isOpen}
+          onChange={(e) => setIsOpen(e.target.checked)}
         />
-        <label>Shelter ID</label>
-        <input
-          type="text"
-          value={shelterId}
-          onChange={(e) => setShelterId(e.target.value)}
-          required
-        />
-        <button type="submit">Add Dog</button>
+        <button type="submit">Add Shelter</button>
       </form>
       {error && <p className="error-message">{error}</p>}
       {success && <p className="success-message">{success}</p>}
@@ -100,4 +77,4 @@ const AddDog = () => {
   );
 };
 
-export default AddDog;
+export default AddShelter;

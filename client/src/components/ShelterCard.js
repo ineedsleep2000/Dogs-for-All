@@ -1,4 +1,3 @@
-// src/components/ShelterCard.js
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -7,10 +6,6 @@ import '../ShelterCard.css';
 function ShelterCard({ shelter, onDelete }) {
   const { isLoggedIn } = useAuth();
   const history = useHistory();
-
-  const handleCardClick = () => {
-    history.push(`/shelters/${shelter.id}`);
-  };
 
   const handleDeleteClick = async (e) => {
     e.stopPropagation();
@@ -31,7 +26,7 @@ function ShelterCard({ shelter, onDelete }) {
   };
 
   return (
-    <div className="shelter-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+    <div className="shelter-card" style={{ cursor: 'pointer' }}>
       <h3>{shelter.name}</h3>
       <p>Address: {shelter.address}</p>
       <p>Contact Number: {shelter.contact_number}</p>

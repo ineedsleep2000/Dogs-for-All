@@ -1,14 +1,14 @@
-// src/components/DogCard.js
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import '../DogCard.css';
 
 function DogCard({ dog, onDelete }) {
-  const { isLoggedIn } = useAuth();
+  const {isLoggedIn } = useAuth();
   const history = useHistory();
 
-  const handleAdoptClick = () => {
+  const handleAdoptClick = (e) => {
+    e.stopPropagation();
     if (!isLoggedIn) {
       history.push('/login');
     } else {
@@ -48,7 +48,7 @@ function DogCard({ dog, onDelete }) {
       <p>Time in Shelter: {dog.time_in_shelter} days</p>
       <p>Adopted: {dog.adopted ? 'Yes' : 'No'}</p>
       <p>Shelter ID: {dog.shelter_id}</p>
-      <button onClick={(e) => { e.stopPropagation(); handleAdoptClick(); }}>Adopt Me</button>
+      <button onClick={handleAdoptClick}>Adopt Me</button>
       {isLoggedIn && (
         <>
           <button className="edit-button" onClick={handleEditClick}>Edit</button>
