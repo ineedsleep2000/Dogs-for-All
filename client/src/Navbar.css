@@ -6,13 +6,13 @@ header {
 }
 
 .logo {
-  height: 150px; /* Adjust as needed */
+  height: 150px; 
   vertical-align: middle;
 }
 
 nav {
   display: inline-block;
-  margin-left: 20px; /* Adjust as needed */
+  margin-left: 20px; 
 }
 
 nav a {
@@ -31,7 +31,6 @@ nav a.active {
   text-decoration: underline;
 }
 
-/* src/components/Navbar.css */
 .logout-button {
   background-color: #ff6666;
   color: white;
@@ -45,5 +44,5 @@ nav a.active {
 }
 
 .logout-button:hover {
-  background-color: #ff6666;
+  background-color: #c0392b;
 }

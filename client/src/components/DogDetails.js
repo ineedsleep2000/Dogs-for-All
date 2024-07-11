@@ -61,9 +61,6 @@ const DogDetails = () => {
       <p>
         <strong>Adopted:</strong> {dog.adopted ? "Yes" : "No"}
       </p>
-      <button className="adopt-button" onClick={handleAdoptMe}>
-        Adopt Me
-      </button>
     </div>
   );
 };

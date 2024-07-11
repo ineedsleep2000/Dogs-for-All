@@ -24,14 +24,14 @@ const Contact = () => {
           </p>
           <p>
             If you would like to contact us about ideas or more information,
-            please call our main office at (555)-Dogs-ForAll.
+            please call our main office at (555)-Dogs-For-All.
           </p>
         </div>
         <div className="contact-box">
           <h1>Support</h1>
           <p>
             If you need support in the app, please call our main office at
-            (555)-Dogs-ForAll.
+            (555)-Dogs-For-All.
           </p>
           <p>
             If you want to support us in our endeavors to make more apps like
@@ -47,7 +47,7 @@ const Contact = () => {
           </p>
           <p>
             If you would like to add your suggestions to our roadmap for future
-            updates, please call our main office at (555)-Dogs-ForAll.
+            updates, please call our main office at (555)-Dogs-For-All.
           </p>
         </div>
         <div className="contact-box">
@@ -63,7 +63,7 @@ const Contact = () => {
           <p>
             If you have a different theory on what Sauron is up to these days,
             we would love to hear it by giving us a call at our main office at
-            (555)-Dogs-ForAll.
+            (555)-Dogs-For-All.
           </p>
         </div>
       </div>

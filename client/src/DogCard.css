@@ -1,17 +1,29 @@
 /* src/components/DogCard.css */
 .dog-card {
-  border: 2px solid grey;
+  border: 2px solid lightgrey;
   border-radius: 10px;
-  padding: 58px;
-  margin: 65px;
+  padding: 20px;
+  margin: 20px 30px 20px 40px; /* Add more left margin */
   text-align: center;
-  max-width: 250px;
-  display: inline-block;
+  width: 300px;  /* Set a fixed width */
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  box-sizing: border-box; /* Ensure padding is included in the height */
 }
 
 .dog-card h3 {
   margin: 0;
   color: #333;
+}
+
+.dog-card img {
+  width: 100%;
+  height: 200px;  /* Set a fixed height for images */
+  object-fit: cover;  /* Ensure images cover the area without distortion */
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 .dog-card p {
@@ -23,13 +35,14 @@
   display: block;
   width: 100%;
   padding: 8px 16px;
-  background-color:#5ce1e6;
+  background-color: #5ce1e6;
   border: none;
   border-radius: 4px;
   color: white;
   cursor: pointer;
   font-size: 16px;
   margin-top: 8px;
+  box-sizing: border-box; /* Ensure padding is included in the height */
 }
 
 .dog-card button:hover {
