@@ -1,16 +1,16 @@
-// src/components/AddDog.js
-import React, { useState } from 'react';
-import { format } from 'date-fns';
-import '../AddDog.css';
+
+import React, { useState } from "react";
+import { format } from "date-fns";
+import "../AddDog.css";
 
 const AddDog = () => {
-  const [name, setName] = useState('');
-  const [image, setImage] = useState('');
-  const [breed, setBreed] = useState('');
-  const [timeInShelter, setTimeInShelter] = useState('');
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [breed, setBreed] = useState("");
+  const [timeInShelter, setTimeInShelter] = useState("");
   const [adopted, setAdopted] = useState(false);
-  const [shelterId, setShelterId] = useState('');
-  const [error, setError] = useState('');
+  const [shelterId, setShelterId] = useState("");
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
@@ -21,29 +21,29 @@ const AddDog = () => {
     try {
       const formattedTimeInShelter = format(new Date(timeInShelter), 'MMM dd yyyy hh:mma');
 
-      const response = await fetch('/dogs', {
-        method: 'POST',
+      const response = await fetch("/dogs", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
-          name, 
-          image, 
-          breed, 
-          time_in_shelter: formattedTimeInShelter, 
-          adopted, 
-          shelter_id: shelterId 
+        body: JSON.stringify({
+          name,
+          image,
+          breed,
+          time_in_shelter: formattedTimeInShelter,
+          adopted,
+          shelter_id: shelterId,
         }),
       });
 
       if (response.ok) {
         setSuccess('Dog added successfully!');
       } else {
-        setError('Failed to add dog. Please try again.');
+        setError("Failed to add dog. Please try again.");
       }
     } catch (error) {
-      console.error('Error during dog addition:', error);
-      setError('An error occurred. Please try again later.');
+      console.error("Error during dog addition:", error);
+      setError("An error occurred. Please try again later.");
     }
   };
 
