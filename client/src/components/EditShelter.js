@@ -53,7 +53,7 @@ function EditShelter() {
   }
 
   return (
-    <div>
+    <div className="edit-shelter-container">
       <h2>Edit Shelter</h2>
       <ShelterForm shelter={shelter} onSubmit={handleUpdateShelter} />
       {error && <p className="error-message">{error}</p>}

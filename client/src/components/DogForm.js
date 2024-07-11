@@ -1,20 +1,14 @@
 // src/components/DogForm.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function DogForm({ dog, onSubmit }) {
   const [formData, setFormData] = useState({
-    name: '',
-    breed: '',
-    time_in_shelter: '',
-    adopted: false,
-    shelter_id: ''
+    name: dog.name || '',
+    image: dog.image || '',
+    breed: dog.breed || '',
+    adopted: dog.adopted || false,
+    shelter_id: dog.shelter_id || ''
   });
-
-  useEffect(() => {
-    if (dog) {
-      setFormData(dog);
-    }
-  }, [dog]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -31,27 +25,46 @@ function DogForm({ dog, onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-      </div>
-      <div>
-        <label>Breed:</label>
-        <input type="text" name="breed" value={formData.breed} onChange={handleChange} required />
-      </div>
-      <div>
-        <label>Time in Shelter (days):</label>
-        <input type="number" name="time_in_shelter" value={formData.time_in_shelter} onChange={handleChange} required />
-      </div>
-      <div>
-        <label>Adopted:</label>
-        <input type="checkbox" name="adopted" checked={formData.adopted} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Shelter ID:</label>
-        <input type="number" name="shelter_id" value={formData.shelter_id} onChange={handleChange} required />
-      </div>
-      <button type="submit">Submit</button>
+      <label>Name</label>
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+      />
+      <label>Image URL</label>
+      <input
+        type="text"
+        name="image"
+        value={formData.image}
+        onChange={handleChange}
+        required
+      />
+      <label>Breed</label>
+      <input
+        type="text"
+        name="breed"
+        value={formData.breed}
+        onChange={handleChange}
+        required
+      />
+      <label>Adopted</label>
+      <input
+        type="checkbox"
+        name="adopted"
+        checked={formData.adopted}
+        onChange={handleChange}
+      />
+      <label>Shelter ID</label>
+      <input
+        type="text"
+        name="shelter_id"
+        value={formData.shelter_id}
+        onChange={handleChange}
+        required
+      />
+      <button type="submit">Update Dog</button>
     </form>
   );
 }
