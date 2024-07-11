@@ -1,0 +1,57 @@
+/* src/components/EditShelter.css */
+.edit-shelter-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-shelter-container h1 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.edit-shelter-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-shelter-container label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.edit-shelter-container input[type="text"],
+.edit-shelter-container input[type="datetime-local"] {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-shelter-container input[type="checkbox"] {
+  margin-bottom: 10px;
+}
+
+.edit-shelter-container button {
+  padding: 10px;
+  background-color: #5ce1e6;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.edit-shelter-container button:hover {
+  background-color: #45b8bd;
+}
+
+.edit-shelter-container .error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}

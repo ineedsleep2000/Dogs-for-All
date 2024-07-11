@@ -42,7 +42,7 @@
   }
   
   .add-dog-container button:hover {
-    background-color: #45b8bd;
+    background-color: lightgreen;
   }
   
   .add-dog-container p {

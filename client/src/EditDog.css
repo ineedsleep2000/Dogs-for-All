@@ -1,0 +1,70 @@
+/* src/components/EditDog.css */
+
+.edit-dog-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .edit-dog-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .edit-dog-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .edit-dog-container label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .edit-dog-container input[type="text"],
+  .edit-dog-container input[type="datetime-local"],
+  .edit-dog-container input[type="number"],
+  .edit-dog-container input[type="checkbox"] {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .edit-dog-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .edit-dog-container button {
+    padding: 10px 20px;
+    background-color: #5ce1e6;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .edit-dog-container button:hover {
+    background-color: lightgreen;
+  }
+  
+  .edit-dog-container .error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .edit-dog-container .success-message {
+    color: green;
+    margin-top: 10px;
+    text-align: center;
+  }
+  

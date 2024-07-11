@@ -20,7 +20,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Fetch the user data or retrieve from local storage/session
+  
     const fetchUser = async () => {
       const response = await fetch('/authorized');
       if (response.ok) {

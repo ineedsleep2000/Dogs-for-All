@@ -1,98 +1,78 @@
-import React, { useState } from 'react';
-import '../AddDog.css';
+// src/components/AdoptApp.js
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import '../AdoptApp.css'; // Import the CSS file
 
-const AddDog = () => {
-  const [name, setName] = useState('');
-  const [image, setImage] = useState('');
-  const [breed, setBreed] = useState('');
-  const [timeInShelter, setTimeInShelter] = useState('');
-  const [adopted, setAdopted] = useState(false);
-  const [shelterId, setShelterId] = useState('');
+const AdoptApp = ({ user }) => {
+  const location = useLocation();
+  const { dogId } = location.state || {};
+  const [applicationFee, setApplicationFee] = useState('');
   const [error, setError] = useState('');
+  const history = useHistory();
+
+  useEffect(() => {
+    if (dogId && user && user.id) {
+      setApplicationFee((Math.random() * 100).toFixed(2)); // Generate a random fee between 0 and 100
+    }
+  }, [dogId, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    try {
-      const formattedTimeInShelter = new Date(timeInShelter).toISOString();
+    if (!user || !user.id) {
+      setError('User not logged in');
+      return;
+    }
 
-      const response = await fetch('/dogs', {
+    try {
+      const response = await fetch('/adoption_applications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          name, 
-          image, 
-          breed, 
-          time_in_shelter: formattedTimeInShelter, 
-          adopted, 
-          shelter_id: shelterId 
-        }),
+        body: JSON.stringify({ dog_id: dogId, owner_id: user.id, adoption_fee: applicationFee }),
       });
 
       if (response.ok) {
-        // Handle successful dog addition
+        history.push('/confirmation'); // Redirect to a confirmation page or wherever appropriate
       } else {
-        setError('Failed to add dog. Please try again.');
+        const errorResponse = await response.json();
+        setError(errorResponse.errors || 'Failed to submit application. Please try again.');
       }
     } catch (error) {
-      console.error('Error during dog addition:', error);
+      console.error('Error during application submission:', error);
       setError('An error occurred. Please try again later.');
     }
   };
 
   return (
-    <div className="add-dog-container">
-      <h1>Add Dog</h1>
+    <div className="adopt-app-container">
+      <h1>Adoption Application</h1>
       <form onSubmit={handleSubmit}>
-        <label>Name</label>
+        <label>Dog ID</label>
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
+          value={dogId || ''}
+          readOnly
         />
-        <label>Image URL</label>
+        <label>Owner ID</label>
         <input
           type="text"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          required
+          value={user ? user.id : ''}
+          readOnly
         />
-        <label>Breed</label>
+        <label>Application Fee</label>
         <input
-          type="text"
-          value={breed}
-          onChange={(e) => setBreed(e.target.value)}
-          required
+          type="number"
+          value={applicationFee}
+          readOnly
         />
-        <label>Time in Shelter</label>
-        <input
-          type="datetime-local"
-          value={timeInShelter}
-          onChange={(e) => setTimeInShelter(e.target.value)}
-          required
-        />
-        <label>Adopted</label>
-        <input
-          type="checkbox"
-          checked={adopted}
-          onChange={(e) => setAdopted(e.target.checked)}
-        />
-        <label>Shelter ID</label>
-        <input
-          type="text"
-          value={shelterId}
-          onChange={(e) => setShelterId(e.target.value)}
-          required
-        />
-        <button type="submit">Add Dog</button>
+        <button type="submit">Submit Application</button>
       </form>
       {error && <p>{error}</p>}
     </div>
   );
 };
 
-export default AddDog;
+export default AdoptApp;

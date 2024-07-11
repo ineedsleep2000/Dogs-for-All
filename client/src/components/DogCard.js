@@ -5,11 +5,11 @@ import { useAuth } from '../contexts/AuthContext';
 import '../DogCard.css';
 
 function DogCard({ dog, onDelete }) {
-  const { auth } = useAuth();
+  const { isLoggedIn } = useAuth();
   const history = useHistory();
 
   const handleAdoptClick = () => {
-    if (!auth.isLoggedIn) {
+    if (!isLoggedIn) {
       history.push('/login');
     } else {
       history.push({
@@ -17,6 +17,10 @@ function DogCard({ dog, onDelete }) {
         state: { dogId: dog.id },
       });
     }
+  };
+
+  const handleCardClick = () => {
+    history.push(`/dogs/${dog.id}`);
   };
 
   const handleDeleteClick = async (e) => {
@@ -32,11 +36,9 @@ function DogCard({ dog, onDelete }) {
     }
   };
 
-  const handleCardClick = () => {
-    history.push({
-      pathname: `/dogs/${dog.id}`,
-      state: { dogId: dog.id }
-    });
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    history.push(`/edit-dog/${dog.id}`);
   };
 
   return (
@@ -47,8 +49,11 @@ function DogCard({ dog, onDelete }) {
       <p>Adopted: {dog.adopted ? 'Yes' : 'No'}</p>
       <p>Shelter ID: {dog.shelter_id}</p>
       <button onClick={(e) => { e.stopPropagation(); handleAdoptClick(); }}>Adopt Me</button>
-      {auth.isLoggedIn && (
-        <button className="delete-button" onClick={(e) => { e.stopPropagation(); handleDeleteClick(e); }}>Delete</button>
+      {isLoggedIn && (
+        <>
+          <button className="edit-button" onClick={handleEditClick}>Edit</button>
+          <button className="delete-button" onClick={handleDeleteClick}>Delete</button>
+        </>
       )}
     </div>
   );

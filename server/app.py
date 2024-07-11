@@ -39,6 +39,7 @@ class Dogs(Resource):
         response = make_response(response_dict, 201)
 
         return response
+
     
 class Dogs_by_id(Resource):
     def get(self, id):
@@ -179,7 +180,7 @@ api.add_resource(Dogs_by_id, '/dogs/<int:id>')
 api.add_resource(Shelters, '/shelters')
 api.add_resource(Shelters_by_id, '/shelters/<int:id>')
 api.add_resource(Owners, "/owners", "/signup")
-api.add_resource(AdoptionApplications, "/adoption_application")
+api.add_resource(AdoptionApplications, "/adoption_applications")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

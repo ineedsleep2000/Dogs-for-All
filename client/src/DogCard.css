@@ -38,8 +38,18 @@
 
 .dog-card .delete-button {
   background-color: #e74c3c;
+  margin-top: 8px;
 }
 
 .dog-card .delete-button:hover {
   background-color: #c0392b;
+}
+
+.dog-card .edit-button {
+  background-color: lightgreen;
+  margin-top: 8px;
+}
+
+.dog-card .edit-button:hover {
+  background-color: lightgreen;
 }
