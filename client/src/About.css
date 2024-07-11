@@ -1,0 +1,36 @@
+.about-container {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.about-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.about-box {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 300px;
+}
+
+.about-box h1 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.about-box p {
+  font-size: 1em;
+  line-height: 1.5;
+}
