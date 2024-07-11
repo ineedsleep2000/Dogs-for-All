@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import '../AddShelter.css'; // Import the CSS file
+import React, { useState } from "react";
+import { format } from "date-fns";
+import "../AddDog.css";
 
-const AddShelter = () => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState('');
+const AddDog = () => {
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [breed, setBreed] = useState("");
+  const [timeInShelter, setTimeInShelter] = useState("");
+  const [adopted, setAdopted] = useState(false);
+  const [shelterId, setShelterId] = useState("");
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
@@ -15,32 +18,37 @@ const AddShelter = () => {
     setSuccess('');
 
     try {
-      const response = await fetch('/shelters', {
-        method: 'POST',
+      const formattedTimeInShelter = format(new Date(timeInShelter), 'MMM dd yyyy hh:mma');
+
+      const response = await fetch("/dogs", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, address, contact_number: contactNumber, is_open: isOpen }),
+        body: JSON.stringify({
+          name,
+          image,
+          breed,
+          time_in_shelter: formattedTimeInShelter,
+          adopted,
+          shelter_id: shelterId,
+        }),
       });
 
       if (response.ok) {
-        setSuccess('Shelter added successfully!');
-        setName('');
-        setAddress('');
-        setContactNumber('');
-        setIsOpen(false);
+        setSuccess('Dog added successfully!');
       } else {
-        setError('Failed to add shelter. Please try again.');
+        setError("Failed to add dog. Please try again.");
       }
     } catch (error) {
-      console.error('Error during shelter addition:', error);
-      setError('An error occurred. Please try again later.');
+      console.error("Error during dog addition:", error);
+      setError("An error occurred. Please try again later.");
     }
   };
 
   return (
-    <div className="add-shelter-container">
-      <h1>Add Shelter</h1>
+    <div className="add-dog-container">
+      <h1>Add Dog</h1>
       <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input
@@ -49,27 +57,41 @@ const AddShelter = () => {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <label>Address</label>
+        <label>Image URL</label>
         <input
           type="text"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
           required
         />
-        <label>Contact Number</label>
+        <label>Breed</label>
         <input
           type="text"
-          value={contactNumber}
-          onChange={(e) => setContactNumber(e.target.value)}
+          value={breed}
+          onChange={(e) => setBreed(e.target.value)}
           required
         />
-        <label>Is Open</label>
+        <label>Time in Shelter</label>
+        <input
+          type="datetime-local"
+          value={timeInShelter}
+          onChange={(e) => setTimeInShelter(e.target.value)}
+          required
+        />
+        <label>Adopted</label>
         <input
           type="checkbox"
-          checked={isOpen}
-          onChange={(e) => setIsOpen(e.target.checked)}
+          checked={adopted}
+          onChange={(e) => setAdopted(e.target.checked)}
         />
-        <button type="submit">Add Shelter</button>
+        <label>Shelter ID</label>
+        <input
+          type="text"
+          value={shelterId}
+          onChange={(e) => setShelterId(e.target.value)}
+          required
+        />
+        <button type="submit">Add Dog</button>
       </form>
       {error && <p className="error-message">{error}</p>}
       {success && <p className="success-message">{success}</p>}
@@ -77,4 +99,4 @@ const AddShelter = () => {
   );
 };
 
-export default AddShelter;
+export default AddDog;
