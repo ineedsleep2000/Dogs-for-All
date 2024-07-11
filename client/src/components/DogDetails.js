@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'; // Ensure this hook is imported
-import '../DogDetails.css';
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext"; // Ensure this hook is imported
+import "../DogDetails.css";
 
 const DogDetails = () => {
   const { id } = useParams();
@@ -18,7 +18,7 @@ const DogDetails = () => {
         setDog(data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching dog details:', error);
+        console.error("Error fetching dog details:", error);
         setLoading(false);
       }
     };
@@ -28,13 +28,15 @@ const DogDetails = () => {
 
   const handleAdoptMe = () => {
     if (auth.user) {
-      console.log(`Adopt clicked - Dog ID: ${dog.id}, Owner ID: ${auth.user.id}`);
+      console.log(
+        `Adopt clicked - Dog ID: ${dog.id}, Owner ID: ${auth.user.id}`
+      );
       history.push({
-        pathname: '/adopt',
-        state: { dogId: dog.id, ownerId: auth.user.id }
+        pathname: "/adopt",
+        state: { dogId: dog.id, ownerId: auth.user.id },
       });
     } else {
-      history.push('/login');
+      history.push("/login");
     }
   };
 
@@ -49,10 +51,19 @@ const DogDetails = () => {
   return (
     <div className="dog-details-container">
       <h1>{dog.name}</h1>
-      <p><strong>Breed:</strong> {dog.breed}</p>
-      <p><strong>Time in Shelter:</strong> {dog.time_in_shelter}</p>
-      <p><strong>Adopted:</strong> {dog.adopted ? 'Yes' : 'No'}</p>
-      <button className="adopt-button" onClick={handleAdoptMe}>Adopt Me</button>
+      <img src={dog.image} alt={dog.name} />
+      <p>
+        <strong>Breed:</strong> {dog.breed}
+      </p>
+      <p>
+        <strong>Time in Shelter:</strong> {dog.time_in_shelter}
+      </p>
+      <p>
+        <strong>Adopted:</strong> {dog.adopted ? "Yes" : "No"}
+      </p>
+      <button className="adopt-button" onClick={handleAdoptMe}>
+        Adopt Me
+      </button>
     </div>
   );
 };
