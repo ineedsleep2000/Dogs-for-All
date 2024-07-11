@@ -1,45 +1,45 @@
-import React, { useState } from 'react';
-import '../AddDog.css';
+import React, { useState } from "react";
+import "../AddDog.css";
 
 const AddDog = () => {
-  const [name, setName] = useState('');
-  const [image, setImage] = useState('');
-  const [breed, setBreed] = useState('');
-  const [timeInShelter, setTimeInShelter] = useState('');
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [breed, setBreed] = useState("");
+  const [timeInShelter, setTimeInShelter] = useState("");
   const [adopted, setAdopted] = useState(false);
-  const [shelterId, setShelterId] = useState('');
-  const [error, setError] = useState('');
+  const [shelterId, setShelterId] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
       const formattedTimeInShelter = new Date(timeInShelter).toISOString();
 
-      const response = await fetch('/dogs', {
-        method: 'POST',
+      const response = await fetch("/dogs", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
-          name, 
-          image, 
-          breed, 
-          time_in_shelter: formattedTimeInShelter, 
-          adopted, 
-          shelter_id: shelterId 
+        body: JSON.stringify({
+          name,
+          image,
+          breed,
+          time_in_shelter: formattedTimeInShelter,
+          adopted,
+          shelter_id: shelterId,
         }),
       });
 
       if (response.ok) {
         // Handle successful dog addition
       } else {
-        setError('Failed to add dog. Please try again.');
+        setError("Failed to add dog. Please try again.");
       }
     } catch (error) {
-      console.error('Error during dog addition:', error);
-      setError('An error occurred. Please try again later.');
+      console.error("Error during dog addition:", error);
+      setError("An error occurred. Please try again later.");
     }
   };
 
