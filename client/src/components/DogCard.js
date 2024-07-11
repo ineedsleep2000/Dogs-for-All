@@ -1,8 +1,8 @@
 // src/components/DogCard.js
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import '../DogCard.css';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import "../DogCard.css";
 
 function DogCard({ dog, onDelete }) {
   const { isLoggedIn } = useAuth();
@@ -10,10 +10,10 @@ function DogCard({ dog, onDelete }) {
 
   const handleAdoptClick = () => {
     if (!isLoggedIn) {
-      history.push('/login');
+      history.push("/login");
     } else {
       history.push({
-        pathname: '/adopt',
+        pathname: "/adopt",
         state: { dogId: dog.id },
       });
     }
@@ -26,13 +26,13 @@ function DogCard({ dog, onDelete }) {
   const handleDeleteClick = async (e) => {
     e.stopPropagation();
     const response = await fetch(`/dogs/${dog.id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
 
     if (response.ok) {
       onDelete(dog.id);
     } else {
-      console.error('Error deleting dog');
+      console.error("Error deleting dog");
     }
   };
 
@@ -42,17 +42,33 @@ function DogCard({ dog, onDelete }) {
   };
 
   return (
-    <div className="dog-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+    <div
+      className="dog-card"
+      onClick={handleCardClick}
+      style={{ cursor: "pointer" }}
+    >
       <h3>{dog.name}</h3>
+      <img src={dog.image} alt={dog.name} />
       <p>Breed: {dog.breed}</p>
       <p>Time in Shelter: {dog.time_in_shelter} days</p>
-      <p>Adopted: {dog.adopted ? 'Yes' : 'No'}</p>
+      <p>Adopted: {dog.adopted ? "Yes" : "No"}</p>
       <p>Shelter ID: {dog.shelter_id}</p>
-      <button onClick={(e) => { e.stopPropagation(); handleAdoptClick(); }}>Adopt Me</button>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          handleAdoptClick();
+        }}
+      >
+        Adopt Me
+      </button>
       {isLoggedIn && (
         <>
-          <button className="edit-button" onClick={handleEditClick}>Edit</button>
-          <button className="delete-button" onClick={handleDeleteClick}>Delete</button>
+          <button className="edit-button" onClick={handleEditClick}>
+            Edit
+          </button>
+          <button className="delete-button" onClick={handleDeleteClick}>
+            Delete
+          </button>
         </>
       )}
     </div>
