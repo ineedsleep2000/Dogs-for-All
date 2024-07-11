@@ -1,12 +1,19 @@
 // src/components/ShelterCard.js
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import '../ShelterCard.css'; 
+import '../ShelterCard.css';
 
 function ShelterCard({ shelter, onDelete }) {
-  const { auth } = useAuth();
+  const { isLoggedIn } = useAuth();
+  const history = useHistory();
 
-  const handleDeleteClick = async () => {
+  const handleCardClick = () => {
+    history.push(`/shelters/${shelter.id}`);
+  };
+
+  const handleDeleteClick = async (e) => {
+    e.stopPropagation();
     const response = await fetch(`/shelters/${shelter.id}`, {
       method: 'DELETE',
     });
@@ -18,14 +25,22 @@ function ShelterCard({ shelter, onDelete }) {
     }
   };
 
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    history.push(`/edit-shelter/${shelter.id}`);
+  };
+
   return (
-    <div className="shelter-card">
+    <div className="shelter-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <h3>{shelter.name}</h3>
       <p>Address: {shelter.address}</p>
       <p>Contact Number: {shelter.contact_number}</p>
       <p>Is Open: {shelter.is_open ? 'Yes' : 'No'}</p>
-      {auth.isLoggedIn && (
-        <button onClick={handleDeleteClick}>Delete</button>
+      {isLoggedIn && (
+        <>
+          <button className="edit-button" onClick={handleEditClick}>Edit</button>
+          <button className="delete-button" onClick={handleDeleteClick}>Delete</button>
+        </>
       )}
     </div>
   );

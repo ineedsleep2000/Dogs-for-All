@@ -1,4 +1,6 @@
+
 import React, { useState } from "react";
+import { format } from "date-fns";
 import "../AddDog.css";
 
 const AddDog = () => {
@@ -9,13 +11,15 @@ const AddDog = () => {
   const [adopted, setAdopted] = useState(false);
   const [shelterId, setShelterId] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
+    setSuccess('');
 
     try {
-      const formattedTimeInShelter = new Date(timeInShelter).toISOString();
+      const formattedTimeInShelter = format(new Date(timeInShelter), 'MMM dd yyyy hh:mma');
 
       const response = await fetch("/dogs", {
         method: "POST",
@@ -33,7 +37,7 @@ const AddDog = () => {
       });
 
       if (response.ok) {
-        // Handle successful dog addition
+        setSuccess('Dog added successfully!');
       } else {
         setError("Failed to add dog. Please try again.");
       }
@@ -90,7 +94,8 @@ const AddDog = () => {
         />
         <button type="submit">Add Dog</button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
     </div>
   );
 };

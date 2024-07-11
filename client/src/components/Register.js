@@ -1,9 +1,11 @@
 // src/components/Register.js
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import '../Register.css';
 
 const Register = () => {
+  const { login } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,6 +27,8 @@ const Register = () => {
       });
 
       if (response.ok) {
+      const userJSON = await response.json()
+      await login(userJSON)
         history.push('/adopt');
       } else {
         setError('Registration failed. Please try again.');

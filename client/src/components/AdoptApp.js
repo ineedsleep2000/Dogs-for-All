@@ -1,42 +1,55 @@
-// src/components/AdoptApp.js
 import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import '../AdoptApp.css'; // Import the CSS file
+import { useLocation, useHistory } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import '../AdoptApp.css';
 
-const AdoptApp = ({ user }) => {
+const AdoptApp = () => {
   const location = useLocation();
-  const { dogId } = location.state || {};
-  const [applicationFee, setApplicationFee] = useState('');
-  const [error, setError] = useState('');
   const history = useHistory();
+  const { user } = useAuth();
+  const [adoptionFee, setAdoptionFee] = useState(Math.floor(Math.random() * 100) + 1); // Random fee between 1 and 100
+  const [dogId, setDogId] = useState('');
+  const [ownerId, setOwnerId] = useState(user?.id);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    if (dogId && user && user.id) {
-      setApplicationFee((Math.random() * 100).toFixed(2));
+    if (location.state) {
+      setDogId(location.state.dogId);
     }
-  }, [dogId, user]);
+    if (user) {
+      setOwnerId(user.id);
+    }
+    console.log('Owner ID:', user ? user.id : 'No user');
+    console.log('Dog ID:', location.state ? location.state.dogId : 'No dog ID');
+  }, [location.state, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
-    if (!user || !user.id) {
-      setError('User not logged in');
-      return;
-    }
+    setSuccess('');
 
     try {
+      const payload = {
+        adoption_fee: adoptionFee,
+        owner_id: ownerId,
+        dog_id: dogId
+      };
+      console.log('Submitting payload:', payload); // Log the payload
+
       const response = await fetch('/adoption_applications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ dog_id: dogId, owner_id: user.id, adoption_fee: applicationFee }),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
-        history.push('/confirmation'); // Redirect to a confirmation page or wherever appropriate
+        setSuccess('Application submitted successfully!');
       } else {
+        const errorText = await response.text();
+        console.error('Failed to submit application:', errorText);
         setError('Failed to submit application. Please try again.');
       }
     } catch (error) {
@@ -49,27 +62,28 @@ const AdoptApp = ({ user }) => {
     <div className="adopt-app-container">
       <h1>Adoption Application</h1>
       <form onSubmit={handleSubmit}>
-        <label>Dog ID</label>
+        <label>Adoption Fee</label>
         <input
-          type="text"
-          value={dogId || ''}
+          type="number"
+          value={adoptionFee}
           readOnly
         />
         <label>Owner ID</label>
         <input
           type="text"
-          value={user ? user.id : ''}
+          value={ownerId}
           readOnly
         />
-        <label>Application Fee</label>
+        <label>Dog ID</label>
         <input
-          type="number"
-          value={applicationFee}
+          type="text"
+          value={dogId}
           readOnly
         />
         <button type="submit">Submit Application</button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
     </div>
   );
 };

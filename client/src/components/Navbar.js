@@ -6,7 +6,7 @@ import '../Navbar.css';
 import logo from '../assets/dogsforall.png';
 
 function Navbar() {
-  const { auth, logout } = useAuth();
+  const { auth, logout, isLoggedIn } = useAuth();
 
   return (
     <header>
@@ -27,7 +27,7 @@ function Navbar() {
         <NavLink to="/contact-us" activeClassName="active">
           Contact Us
         </NavLink>
-        {auth.isLoggedIn ? (
+        {isLoggedIn ? (
           <>
             <NavLink to="/add-dog" activeClassName="active">
               Add Dog
@@ -38,7 +38,7 @@ function Navbar() {
             <NavLink to="/adopt" activeClassName="active">
               Adopt
             </NavLink>
-            <button onClick={logout}>Logout</button>
+            <button className="logout-button" onClick={logout}>Logout</button>
           </>
         ) : (
           <>

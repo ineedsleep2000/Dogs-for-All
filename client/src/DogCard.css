@@ -23,7 +23,7 @@
   display: block;
   width: 100%;
   padding: 8px 16px;
-  background-color: #5ce1e6;
+  background-color: darkcyan;
   border: none;
   border-radius: 4px;
   color: white;
@@ -33,13 +33,23 @@
 }
 
 .dog-card button:hover {
-  background-color: #45b8bd;
+  background-color: #5ce1e6;
 }
 
 .dog-card .delete-button {
-  background-color: #e74c3c;
+  background-color: #ff6666;
+  margin-top: 8px;
 }
 
 .dog-card .delete-button:hover {
   background-color: #c0392b;
+}
+
+.dog-card .edit-button {
+  background-color: darkcyan;
+  margin-top: 8px;
+}
+
+.dog-card .edit-button:hover {
+  background-color: #5ce1e6;
 }

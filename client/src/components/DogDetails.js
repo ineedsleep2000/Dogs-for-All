@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext'; // Ensure this hook is imported
 import '../DogDetails.css';
 
-const DogDetails = ({ user }) => {
+const DogDetails = () => {
   const { id } = useParams();
   const history = useHistory();
+  const { auth } = useAuth(); // Use the context to get the user
   const [dog, setDog] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -25,10 +27,11 @@ const DogDetails = ({ user }) => {
   }, [id]);
 
   const handleAdoptMe = () => {
-    if (user) {
+    if (auth.user) {
+      console.log(`Adopt clicked - Dog ID: ${dog.id}, Owner ID: ${auth.user.id}`);
       history.push({
         pathname: '/adopt',
-        state: { dogId: dog.id, ownerId: user.id }
+        state: { dogId: dog.id, ownerId: auth.user.id }
       });
     } else {
       history.push('/login');
