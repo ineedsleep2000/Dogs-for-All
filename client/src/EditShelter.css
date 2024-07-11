@@ -34,7 +34,7 @@
 }
 
 .edit-shelter-container button {
-  background-color: #5ce1e6;
+  background-color: #4CAF50;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -42,7 +42,7 @@
 }
 
 .edit-shelter-container button:hover {
-  background-color: #45b8bd;
+  background-color: #5ce1e6;
 }
 
 .edit-shelter-container .error-message {

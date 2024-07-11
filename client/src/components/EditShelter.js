@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import ShelterForm from './ShelterForm';
 import { useParams, useHistory } from 'react-router-dom';
-import '../EditShelter.css'
+import '../EditShelter.css'; // Import the CSS file
 
 function EditShelter() {
   const { id } = useParams();
@@ -26,7 +26,7 @@ function EditShelter() {
     setSuccess('');
 
     try {
-      const response = fetch(`/shelters/${id}`, {
+      const response = await fetch(`/shelters/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

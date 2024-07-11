@@ -11,11 +11,11 @@
 
 .shelter-card h3 {
   margin: 0;
-  color: #333;
+  color: black;
 }
 
 .shelter-card p {
-  color: #666;
+  color: black;
   margin: 8px 0;
 }
 
@@ -23,25 +23,24 @@
   display: block;
   width: 100%;
   padding: 8px 16px;
-  background-color: #5ce1e6;
   border: none;
   border-radius: 4px;
-  color: white;
+  color: grey;
   cursor: pointer;
   font-size: 16px;
   margin-top: 8px;
 }
 
 .shelter-card button:hover {
-  background-color: #45b8bd;
+  background-color: lightblue;
 }
 
 .shelter-card .edit-button {
-  background-color: lightgreen;
+  background-color: cyan;
   margin-top: 0;
 }
 
 .shelter-card .delete-button {
-  background-color: #ff3333;
+  background-color: #ff6666;
   margin-top: 8px;
 }
