@@ -1,6 +1,5 @@
-// src/components/AddShelter.js
 import React, { useState } from 'react';
-import '../AddShelter.css';
+import '../AddShelter.css'; // Import the CSS file
 
 const AddShelter = () => {
   const [name, setName] = useState('');
@@ -8,10 +7,12 @@ const AddShelter = () => {
   const [contactNumber, setContactNumber] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     try {
       const response = await fetch('/shelters', {
@@ -23,7 +24,11 @@ const AddShelter = () => {
       });
 
       if (response.ok) {
-        // Handle successful shelter addition
+        setSuccess('Shelter added successfully!');
+        setName('');
+        setAddress('');
+        setContactNumber('');
+        setIsOpen(false);
       } else {
         setError('Failed to add shelter. Please try again.');
       }
@@ -66,7 +71,8 @@ const AddShelter = () => {
         />
         <button type="submit">Add Shelter</button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
     </div>
   );
 };

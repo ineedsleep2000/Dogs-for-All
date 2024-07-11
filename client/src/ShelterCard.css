@@ -15,7 +15,7 @@
 }
 
 .shelter-card p {
-  color: black;
+  color: grey;
   margin: 8px 0;
 }
 
@@ -25,19 +25,23 @@
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
-  color: grey;
+  color: white;
   cursor: pointer;
   font-size: 16px;
   margin-top: 8px;
 }
 
 .shelter-card button:hover {
-  background-color: lightblue;
+  background-color: #c0392b;
 }
 
 .shelter-card .edit-button {
-  background-color: cyan;
+  background-color: #5ce1e6;
   margin-top: 0;
+}
+
+.shelter-card .edit-button:hover {
+  background-color: darkcyan;
 }
 
 .shelter-card .delete-button {
